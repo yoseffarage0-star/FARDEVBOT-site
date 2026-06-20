@@ -1,0 +1,72 @@
+{
+  "as_of": "2026-06-20T18:04:24+00:00",
+  "days": 5,
+  "ret_pct": -2.41,
+  "bh_ret_pct": -4.37,
+  "max_drawdown_pct": -2.76,
+  "curve": [
+    {
+      "date": "2026-06-15",
+      "eq": 99.9455,
+      "bh": 99.9
+    },
+    {
+      "date": "2026-06-16",
+      "eq": 99.4741,
+      "bh": 98.9763
+    },
+    {
+      "date": "2026-06-17",
+      "eq": 98.4584,
+      "bh": 97.1585
+    },
+    {
+      "date": "2026-06-18",
+      "eq": 97.1824,
+      "bh": 94.8089
+    },
+    {
+      "date": "2026-06-19",
+      "eq": 97.5929,
+      "bh": 95.628
+    }
+  ],
+  "gate": {
+    "passed": false,
+    "met": 4,
+    "total": 5,
+    "days_to_go": 9,
+    "criteria": [
+      {
+        "id": "duration",
+        "label": "\u2265 14 soak days",
+        "ok": false,
+        "detail": "5/14 days"
+      },
+      {
+        "id": "daily",
+        "label": "ran every day (no gaps)",
+        "ok": true,
+        "detail": "max gap 1d"
+      },
+      {
+        "id": "fresh",
+        "label": "currently running",
+        "ok": true,
+        "detail": "1d ago"
+      },
+      {
+        "id": "no_trip",
+        "label": "kill switch not tripped",
+        "ok": true,
+        "detail": "armed"
+      },
+      {
+        "id": "drawdown",
+        "label": "max drawdown within 30% cap",
+        "ok": true,
+        "detail": "-2.8%"
+      }
+    ]
+  }
+}
