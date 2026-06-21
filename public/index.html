@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>F.A.R. DEV BOT — custom software &amp; bots</title>
+<meta name="description" content="F.A.R. DEV BOT builds custom software, automations, and bots — built around how you actually work, plus in-house bots you can integrate." />
+<link rel="canonical" href="https://fardevbot.com/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="F.A.R. DEV BOT" />
+<meta property="og:url" content="https://fardevbot.com/" />
+<meta property="og:title" content="F.A.R. DEV BOT — custom software & bots, built to fit" />
+<meta property="og:description" content="A studio building custom software, automations, and bots — built around how you actually work. See the work and the flagship bot's live, public track record." />
+<meta property="og:image" content="https://fardevbot.com/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="FARDEVBOT — custom software and bots" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="F.A.R. DEV BOT — custom software & bots, built to fit" />
+<meta name="twitter:description" content="Custom software, automations, and bots — built around how you actually work." />
+<meta name="twitter:image" content="https://fardevbot.com/og.png" />
+<!-- PUBLIC, STATIC, READ-ONLY. Company/portfolio page. Reads a sanitized snapshot.json
+     (percentages only — never balances) for the flagship bot's track record. It has NO
+     connection to the private bot and NO dashboard. Data flows one way: the bot pushes the
+     snapshot out; this page only displays it. No /app, no /api, no external scripts. -->
+<style>
+  :root{
+    --bg:#05070d; --panel:#0b0e16; --line:#1b2030;
+    --ink:#eef1f7; --ink2:#a6adbf; --ink3:#818a9e;
+    --acc:#60a5fa; --up:#34d399; --down:#fb7185;
+    --acc-h:#93c5fd; --on-acc:#05070d; --curve2:#3a4255;
+    --mono:ui-monospace,SFMono-Regular,Menlo,"DejaVu Sans Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:60px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--mono);line-height:1.55;
+       -webkit-font-smoothing:antialiased;font-size:14px}
+  a{color:var(--acc);text-decoration:none}
+  a:focus-visible,.btn:focus-visible,.pbtn:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);
+         border-bottom:1px solid var(--line);z-index:10}
+  header .wrap{display:flex;align-items:center;gap:8px;height:48px;font-size:12px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 2s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  @media (prefers-reduced-motion: reduce){ .dot{animation:none} }
+  .brand{font-weight:700;letter-spacing:.06em}
+  .brandfar{color:var(--acc)}
+  .tag{margin-left:auto;color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;font-size:10px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  h1{font-size:clamp(28px,5vw,46px);line-height:1.1;letter-spacing:-.01em;margin:0 0 18px;font-weight:600}
+  h1 .acc{color:var(--acc)}
+  .lede{max-width:600px;color:var(--ink2);font-size:15px}
+  .eyebrow{color:var(--acc);text-transform:uppercase;letter-spacing:.22em;font-size:10px;margin:0 0 10px}
+  h2{font-size:18px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+  .h2sub{color:var(--ink3);font-size:12.5px;margin:0 0 18px;max-width:560px}
+  .panel{border:1px solid var(--line);border-radius:4px;background:var(--panel);padding:18px}
+  .btn{display:inline-block;margin-top:22px;border:1px solid var(--acc);color:var(--acc);
+       border-radius:4px;padding:11px 18px;font-size:13px;letter-spacing:.04em;
+       background:rgba(96,165,250,.07);transition:background .15s ease,color .15s ease}
+  .btn:hover{background:var(--acc);color:var(--on-acc)}
+  /* services */
+  .svc{display:grid;gap:10px;margin-top:4px}
+  @media(min-width:560px){.svc{grid-template-columns:1fr 1fr}}
+  .svc .st{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin-bottom:6px}
+  .svc .st .n{color:var(--acc)}
+  .svc .sb{font-size:12.5px;color:var(--ink3)}
+  /* bot showcase */
+  .botcard{margin-top:4px}
+  .botname{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .botname .ph{color:var(--acc)}
+  .botstatus{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3);
+             border:1px solid var(--line);border-radius:3px;padding:3px 7px;margin-left:8px;
+             vertical-align:middle;white-space:nowrap}
+  .botpitch{color:var(--ink2);font-size:13.5px;margin:10px 0 4px;max-width:600px}
+  .trk{border:1px solid var(--line);border-radius:4px;background:#070709;padding:16px;margin-top:18px}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+  #stats{min-height:96px}
+  @media(min-width:560px){.stats{grid-template-columns:repeat(4,1fr)}}
+  .stat{border:1px solid var(--line);border-radius:4px;padding:10px}
+  .stat .k{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)}
+  .stat .v{font-size:15px;margin-top:4px;font-variant-numeric:tabular-nums}
+  .up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--ink3)}
+  .stamp{margin-top:18px;border:1px solid var(--acc);border-radius:4px;padding:12px 14px;
+         color:var(--ink);font-size:12px;background:rgba(96,165,250,.07);max-width:620px}
+  .stamp b{color:var(--acc)}
+  #gateBox summary{cursor:pointer;list-style:none}
+  #gateBox summary::-webkit-details-marker{display:none}
+  #gateBox summary::before{content:"\25B8 ";color:var(--ink3)}
+  #gateBox[open] summary::before{content:"\25BE "}
+  .gate-row{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding:4px 0}
+  .gate-row .lab{color:var(--ink2)} .ok{color:var(--up)} .no{color:var(--down)}
+  .rules{display:grid;gap:10px;margin-top:18px}
+  @media(min-width:560px){.rules{grid-template-columns:1fr 1fr}}
+  .rule .rt{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin-bottom:4px}
+  .rule .rb{font-size:12px;color:var(--ink3)}
+  .integrate{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--ink2)}
+  .integrate a{font-weight:600}
+  .more{margin-top:14px;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em}
+  /* projects carousel */
+  .car{position:relative;margin-top:18px}
+  .track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+         -webkit-overflow-scrolling:touch;padding:2px 2px 14px;scrollbar-width:none}
+  .track::-webkit-scrollbar{display:none}
+  .track:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+  .pcard{scroll-snap-align:start;flex:0 0 84%;border:1px solid var(--line);border-radius:6px;
+         background:var(--panel);padding:18px;display:flex;flex-direction:column}
+  @media(min-width:560px){.pcard{flex-basis:46%}}
+  @media(min-width:880px){.pcard{flex-basis:31.5%}}
+  .pcat{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)}
+  .pname{font-size:18px;font-weight:600;margin:6px 0 0;letter-spacing:-.01em}
+  .pname .ph{color:var(--acc)}
+  .pdesc{font-size:12.5px;color:var(--ink3);margin:10px 0 0;flex:1;line-height:1.5}
+  .pstats{display:flex;gap:16px;margin-top:14px}
+  .pstats b{display:block;font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600}
+  .pstats span{font-size:8.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+  .pacts{display:flex;gap:8px;margin-top:16px}
+  .pbtn{flex:1;text-align:center;border:1px solid var(--line);border-radius:4px;padding:8px 6px;
+        min-height:44px;display:flex;align-items:center;justify-content:center;
+        font-size:11.5px;color:var(--ink2);transition:border-color .15s ease,color .15s ease,background .15s ease}
+  .pbtn:hover{border-color:var(--acc);color:var(--acc)}
+  .pbtn.primary{border-color:var(--acc);color:var(--acc);background:rgba(96,165,250,.07)}
+  .pbtn.primary:hover{background:var(--acc);color:var(--on-acc)}
+  .arr{position:absolute;top:42%;transform:translateY(-50%);z-index:3;width:44px;height:44px;
+       border:1px solid var(--line);border-radius:50%;background:rgba(11,14,22,.92);color:var(--ink2);
+       font-size:18px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;
+       transition:border-color .15s ease,color .15s ease}
+  .arr:hover{border-color:var(--acc);color:var(--acc)}
+  .arr:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .arr.prev{left:-8px} .arr.next{right:-8px}
+  @media(min-width:560px){.arr{display:flex}}
+  .dots{display:flex;justify-content:center;gap:9px;margin-top:4px}
+  .cdot{width:7px;height:7px;border-radius:50%;border:0;padding:0;cursor:pointer;
+        background:var(--line);transition:background .15s ease}
+  .cdot.active{background:var(--acc)}
+  .cdot:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  footer{padding:22px 0;color:var(--ink3);font-size:10px;text-transform:uppercase;letter-spacing:.1em;
+         display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  svg{display:block;width:100%;height:190px}
+  .clegend{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:8px;font-size:10.5px;color:var(--ink3)}
+  .clegend .lg{display:inline-flex;align-items:center;gap:6px}
+  .clegend .sw{display:inline-block;width:16px;height:0}
+  .clegend .sw.bh{border-top:1px dashed var(--curve2)}
+  .cpill{margin-left:auto;color:var(--up);border:1px solid var(--up);border-radius:999px;padding:3px 10px;font-weight:600;background:rgba(52,211,153,.08)}
+  .vsub{font-size:9.5px;color:var(--ink3);margin-top:3px}
+  .stat.hero{border-color:var(--up)}
+  .stat.hero .v{font-size:19px}
+  .rule.extra{display:none}
+  .rules.show-all .rule.extra{display:block}
+  .rulesmore{margin-top:12px;border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:4px;padding:8px 14px;font-size:11.5px;cursor:pointer;font-family:inherit}
+  .rulesmore:hover{border-color:var(--acc);color:var(--acc)}
+  button{font-family:inherit}
+  .contactbox{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:18px}
+  .contactbox .btn{margin-top:0;cursor:pointer}
+  .cemail{font-size:16px;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:11px 14px;background:var(--panel);user-select:all}
+  .btn.ghost{border-color:var(--line);color:var(--ink2);background:transparent}
+  .btn.ghost:hover{border-color:var(--acc);color:var(--acc);background:transparent}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--acc);color:var(--on-acc);font-size:13px;font-weight:600;padding:11px 16px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:50;max-width:90vw;text-align:center}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .cform{margin-top:18px;max-width:560px;display:flex;flex-direction:column;gap:12px}
+  .frow{display:flex;gap:12px;flex-wrap:wrap}
+  .frow>input{flex:1;min-width:200px}
+  .cform input,.cform textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:4px;color:var(--ink);font-family:inherit;font-size:14px;padding:12px 14px;transition:border-color .15s ease}
+  .cform input::placeholder,.cform textarea::placeholder{color:var(--ink3)}
+  .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--acc)}
+  .cform textarea{resize:vertical;min-height:96px}
+  .cform .btn{margin-top:6px;align-self:flex-start;cursor:pointer}
+  .cform .btn[disabled]{opacity:.5;cursor:default}
+  .hpot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .cfFallback{font-size:11.5px;color:var(--ink3);margin:4px 0 0}
+  .fbEmail{color:var(--ink2);user-select:all}
+  .cfDone{margin-top:18px;border:1px solid var(--up);border-radius:6px;padding:18px;background:rgba(52,211,153,.07);max-width:560px}
+  .cfDoneTitle{color:var(--up);font-weight:600;font-size:15px}
+  .cfDoneSub{color:var(--ink2);font-size:13px;margin-top:4px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="dot"></span><span class="brand"><span class="brandfar">F.A.R.</span> DEV BOT</span>
+  <span class="tag">custom software · bots · automation</span>
+</div></header>
+
+<main class="wrap">
+  <section>
+    <p class="eyebrow">F.A.R. DEV BOT · software &amp; automation studio</p>
+    <h1>Custom software and <span class="acc">bots</span>, built to fit.</h1>
+    <p class="lede">Custom software, automations, and bots — built around how you actually work. A few of the in-house bots are below.</p>
+    <a class="btn" href="#contact">Start a project →</a>
+  </section>
+
+  <section>
+    <p class="eyebrow">what i build</p>
+    <h2>Projects &amp; capabilities</h2>
+    <p class="h2sub">FARQUANT is live and public below. The rest are builds I take on — see one that fits?</p>
+    <div class="car">
+      <button class="arr prev" id="pprev" type="button" aria-label="Previous project">‹</button>
+      <button class="arr next" id="pnext" type="button" aria-label="Next project">›</button>
+      <div class="track" id="ptrack" tabindex="0" role="group" aria-label="Projects carousel">
+
+        <article class="pcard">
+          <div class="pcat">crypto · paper</div>
+          <div class="pname"><span class="ph">FARQUANT</span></div>
+          <p class="pdesc">No-leverage crypto bot built on risk control — down less than the market in its first week, on paper.</p>
+          <div class="pstats">
+            <div><b id="pq-days">—</b><span>days</span></div>
+            <div><b id="pq-ret">—</b><span>return (paper)</span></div>
+            <div><b id="pq-dd">—</b><span>max drawdown</span></div>
+          </div>
+          <div class="pacts">
+            <a class="pbtn" href="#farquant">Discover →</a>
+            <a class="pbtn primary" href="mailto:FARDEVBOT@gmail.com?subject=Sign%20up%3A%20FARQUANT">Sign up</a>
+          </div>
+        </article>
+
+        <article class="pcard">
+          <div class="pcat">service</div>
+          <div class="pname">Automations</div>
+          <p class="pdesc">Repetitive workflows, handled end-to-end.</p>
+          <div class="pacts">
+            <a class="pbtn primary" href="mailto:FARDEVBOT@gmail.com?subject=Build%3A%20Automation">Discuss a build →</a>
+          </div>
+        </article>
+
+        <article class="pcard">
+          <div class="pcat">service</div>
+          <div class="pname">Custom dashboards</div>
+          <p class="pdesc">Scattered data → one clear, real-time view.</p>
+          <div class="pacts">
+            <a class="pbtn primary" href="mailto:FARDEVBOT@gmail.com?subject=Build%3A%20Dashboard">Discuss a build →</a>
+          </div>
+        </article>
+
+        <article class="pcard">
+          <div class="pcat">service</div>
+          <div class="pname">Integrations</div>
+          <p class="pdesc">Your tools, wired to pass data automatically.</p>
+          <div class="pacts">
+            <a class="pbtn primary" href="mailto:FARDEVBOT@gmail.com?subject=Build%3A%20Integration">Discuss a build →</a>
+          </div>
+        </article>
+
+        <article class="pcard">
+          <div class="pcat">service</div>
+          <div class="pname">Monitoring bots</div>
+          <p class="pdesc">A watchdog that pings you before things break.</p>
+          <div class="pacts">
+            <a class="pbtn primary" href="mailto:FARDEVBOT@gmail.com?subject=Build%3A%20Monitoring%20bot">Discuss a build →</a>
+          </div>
+        </article>
+
+      </div>
+      <div class="dots" id="pdots" role="tablist" aria-label="Project navigation"></div>
+    </div>
+  </section>
+
+  <section id="farquant">
+    <p class="eyebrow">featured project</p>
+    <h2>FARQUANT — built and run in-house</h2>
+    <p class="h2sub">A working example of how I build — live, public, and honest.</p>
+
+    <div class="botcard panel">
+      <div class="botname"><span class="ph">FARQUANT</span>
+        <span class="botstatus">crypto · paper · live track record</span></div>
+      <p class="botpitch">Rules-based risk control, no leverage — proven on paper against live prices before any real money.</p>
+
+      <div class="trk">
+        <h2 style="font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink3)">
+          Track record <span class="muted" id="asof"></span></h2>
+        <svg id="curve" viewBox="0 0 600 190" preserveAspectRatio="none" role="img"
+             aria-label="FARQUANT paper equity curve versus buy-and-hold"></svg>
+        <div id="curveLegend" class="clegend"></div>
+        <div id="curveCap" class="muted" style="font-size:11px;margin-top:6px"></div>
+        <div class="stats" id="stats"></div>
+        <p style="font-size:10.5px;color:var(--ink3);margin:14px 0 0;line-height:1.5">
+          Simulated paper results — hypothetical, not investment advice. No outside money is accepted or managed.
+        </p>
+      </div>
+
+      <details class="panel" id="gateBox" style="margin-top:16px;background:#070709;display:none">
+        <summary style="font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink3);margin-bottom:12px">
+          Gate to live money <span id="gateMet" class="muted"></span></summary>
+        <div id="gate"></div>
+      </details>
+
+      <p class="eyebrow" style="margin-top:24px">the contract</p>
+      <div style="font-size:13px;color:var(--ink);font-weight:600;margin-bottom:2px">Rules this bot will never break</div>
+      <div class="rules" id="rules"></div>
+      <button id="moreRules" type="button" class="rulesmore">+ 3 more rules it never breaks</button>
+
+      <div class="integrate">This is the bar I hold my own money to — I'll build yours to match.
+        <a href="#contact">Start your project →</a></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow">get in touch</p>
+    <h2>Start your project.</h2>
+    <p class="h2sub">Tell me what you're building and how to reach you — I'll get back to you personally.</p>
+    <form id="contactForm" class="cform">
+      <div class="frow">
+        <input name="name" type="text" autocomplete="name" placeholder="Your name *" required>
+        <input name="email" type="email" autocomplete="email" placeholder="Your email *" required>
+      </div>
+      <input name="phone" type="tel" autocomplete="tel" placeholder="Your phone (optional)">
+      <textarea name="message" rows="4" placeholder="What are you looking to build? *" required></textarea>
+      <input type="hidden" name="_subject" value="New inquiry from fardevbot.com">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_autoresponse" value="Thanks for reaching out to FARDEVBOT — I got your message and I'll be in touch shortly.">
+      <input type="text" name="_honey" class="hpot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit" id="cfSubmit">Send message</button>
+      <p class="cfFallback">Prefer email? <span class="fbEmail">FARDEVBOT@gmail.com</span></p>
+    </form>
+    <div id="cfDone" class="cfDone" hidden>
+      <div class="cfDoneTitle">✓ Message sent</div>
+      <div class="cfDoneSub">Thanks — I'll be in touch shortly at the email you provided.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>F.A.R. DEV BOT · custom software, bots &amp; automation</span>
+  <span>crypto track record is paper · not investment advice · no funds at risk</span>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const RULES = [
+  ["No leverage — ever","No futures, no margin. Ever."],
+  ["Exposure, not predictions","Rebalances to a target weight. No market-timing."],
+  ["A disaster circuit-breaker","Flattens only on abnormal failure. Holds through normal bears."],
+  ["Paper before real money","Weeks on paper first. Real money only when proven."],
+  ["Withdrawal-proof keys","Keys can trade — never withdraw."],
+  ["One safety gate","One approval gate. Hard daily + per-order caps."],
+];
+const pct = (n)=> n==null?"—":(n===0?"0.0%":(n>=0?"+":"")+Number(n).toFixed(1)+"%");
+const esc = (s)=> String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = (s)=> s ? new Date(s+ (s.length<=10?"T00:00:00Z":"")).toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"}) : "";
+const mdd = (a)=>{ let pk=-Infinity,m=0; for(const v of (a||[])){ pk=Math.max(pk,v); if(pk>0) m=Math.min(m,(v-pk)/pk); } return m*100; };
+
+document.getElementById("rules").innerHTML = RULES.map(([t,b],i)=>
+  `<div class="rule panel${i>=3?' extra':''}"><div class="rt"><span class="acc">${String(i+1).padStart(2,"0")}</span> ${t}</div><div class="rb">${b}</div></div>`).join("");
+(function(){ const mb=document.getElementById("moreRules"), rw=document.getElementById("rules"); if(mb&&rw) mb.addEventListener("click",()=>{ const open=rw.classList.toggle("show-all"); mb.textContent=open?"− show fewer":"+ 3 more rules it never breaks"; }); })();
+
+function drawCurve(curve){
+  const svg=document.getElementById("curve");
+  if(!curve||curve.length<2){svg.innerHTML=`<text x="12" y="98" fill="var(--ink3)" font-size="11">curve accruing — check back as the soak builds history</text>`;return;}
+  const w=600,h=190,pad=14;
+  const eq=curve.map(c=>c.eq), bh=curve.map(c=>c.bh), all=eq.concat(bh);
+  const min=Math.min(...all), max=Math.max(...all), span=(max-min)||1, step=w/(curve.length-1);
+  const y=v=>pad+(h-2*pad)*(1-(v-min)/span);
+  const path=a=>a.map((v,i)=>`${(i*step).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const gap=path(eq)+" "+curve.map((_,i)=>{const j=curve.length-1-i;return `${(j*step).toFixed(1)},${y(bh[j]).toFixed(1)}`;}).join(" ");
+  const stroke = eq[eq.length-1]>=eq[0] ? "var(--up)":"var(--down)";
+  const base=y(eq[0]).toFixed(1);
+  svg.innerHTML =
+    `<polygon points="${gap}" fill="rgba(52,211,153,.10)" stroke="none"/>`+
+    `<line x1="0" y1="${base}" x2="${w}" y2="${base}" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>`+
+    `<polyline points="${path(bh)}" fill="none" stroke="var(--curve2)" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>`+
+    `<polyline points="${path(eq)}" fill="none" stroke="${stroke}" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+}
+
+fetch("snapshot.json").then(r=>r.json()).then(d=>{
+  const has = d && d.days>0;
+  const vsNum = has ? (Number(d.ret_pct)-Number(d.bh_ret_pct)) : null;
+  document.getElementById("asof").textContent = d&&d.as_of ? "· as of "+fmtDate(d.as_of.slice(0,10)) : "";
+  const _qd=document.getElementById("pq-days"); if(_qd) _qd.textContent = has?String(d.days):"—";
+  const _qr=document.getElementById("pq-ret"); if(_qr) _qr.textContent = has?pct(d.ret_pct):"—";
+  const _qdd=document.getElementById("pq-dd"); if(_qdd) _qdd.textContent = has?pct(d.max_drawdown_pct):"—";
+  drawCurve(has?d.curve:null);
+  document.getElementById("curveCap").textContent = has
+    ? `${d.days} days — too short to prove an edge. So far it's down ${pct(d.ret_pct)} while the market is down ${pct(d.bh_ret_pct)}: a smaller drawdown than just holding.`
+    : "the curve fills in as the paper soak builds history.";
+  const _lg=document.getElementById("curveLegend");
+  if(_lg){ _lg.innerHTML = has ? `<span class="lg"><span class="sw" style="border-top:2px solid ${d.ret_pct>=0?'var(--up)':'var(--down)'}"></span>FARQUANT ${pct(d.ret_pct)}</span><span class="lg"><span class="sw bh"></span>Buy &amp; hold ${pct(d.bh_ret_pct)}</span><span class="cpill">${(vsNum>=0?"+":"")+vsNum.toFixed(1)} pts vs market</span>` : ""; }
+  const bhDD = has ? mdd(d.curve.map(c=>c.bh)) : null;
+  const stats = has ? [
+    ["vs market", (vsNum>=0?"+":"")+vsNum.toFixed(1)+" pts", vsNum>=0?"up":"down", "lost less than the market"],
+    ["return (paper)", pct(d.ret_pct), d.ret_pct>=0?"up":"down", "mkt "+pct(d.bh_ret_pct)],
+    ["max drawdown", pct(d.max_drawdown_pct), "down", "mkt "+pct(bhDD)],
+    ["days running", String(d.days), "acc", ""],
+  ] : [["days running", d?String(d.days):"—","acc",""],["status","accruing","acc",""],["vs market","—","muted",""],["leverage","none","up",""]];
+  document.getElementById("stats").innerHTML = stats.map(([k,v,c,s],i)=>
+    `<div class="stat${i===0?' hero':''}"><div class="k">${k}</div><div class="v ${c==='acc'?'acc':c}">${v}</div>${s?`<div class="vsub">${s}</div>`:''}</div>`).join("")
+    .replace(/class="v acc"/g,'class="v" style="color:var(--acc)"');
+  if(d&&d.gate&&d.gate.total>0){
+    const g=d.gate; const box=document.getElementById("gateBox"); box.style.display="block";
+    document.getElementById("gateMet").textContent = `· ${g.met}/${g.total} met`+(g.days_to_go>0?` · ${g.days_to_go}d to go`:"");
+    document.getElementById("gate").innerHTML = (g.criteria||[]).map(c=>
+      `<div class="gate-row"><span class="lab"><span class="${c.ok?'ok':'no'}">${c.ok?'✓':'✗'}</span> ${esc(c.label)}</span><span class="muted">${esc(c.detail||'')}</span></div>`).join("");
+  }
+}).catch(()=>{ drawCurve(null); document.getElementById("stats").innerHTML =
+  `<div class="stat"><div class="k">status</div><div class="v muted">snapshot loading…</div></div>`; });
+
+// projects carousel: prev/next arrows + native scroll-snap/swipe + position dots (no auto-advance)
+(function(){
+  const track=document.getElementById("ptrack");
+  if(!track) return;
+  const prev=document.getElementById("pprev"), next=document.getElementById("pnext");
+  const dotsWrap=document.getElementById("pdots");
+  const cards=Array.from(track.querySelectorAll(".pcard"));
+  const stepPx=()=>{const c=track.querySelector(".pcard");return c?c.getBoundingClientRect().width+14:300;};
+  const go=(dir)=>track.scrollBy({left:dir*stepPx(),behavior:"smooth"});
+  if(prev) prev.addEventListener("click",()=>go(-1));
+  if(next) next.addEventListener("click",()=>go(1));
+
+  // position dots — one per card
+  const dots=cards.map((card,i)=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="cdot"; b.setAttribute("role","tab");
+    b.setAttribute("aria-label","Go to project "+(i+1));
+    b.addEventListener("click",()=>{
+      if(card.scrollIntoView){card.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"});}
+      else{track.scrollTo({left:i*stepPx(),behavior:"smooth"});}
+    });
+    if(dotsWrap) dotsWrap.appendChild(b);
+    return b;
+  });
+
+  function activeIndex(){
+    let best=0,bestDist=Infinity;
+    const base=track.getBoundingClientRect().left;
+    cards.forEach((c,i)=>{
+      const d=Math.abs(c.getBoundingClientRect().left-base);
+      if(d<bestDist){bestDist=d;best=i;}
+    });
+    return best;
+  }
+  function setActive(){
+    const idx=activeIndex();
+    dots.forEach((d,i)=>{
+      const on=i===idx;
+      d.classList.toggle("active",on);
+      d.setAttribute("aria-selected",on?"true":"false");
+    });
+  }
+  let raf=null;
+  track.addEventListener("scroll",()=>{
+    if(raf) return;
+    raf=requestAnimationFrame(()=>{raf=null; setActive();});
+  },{passive:true});
+  setActive();
+})();
+
+// contact form -> Formsubmit (relays to Gmail); inline success; other mail buttons scroll to the form
+(function(){
+  const form=document.getElementById("contactForm");
+  const done=document.getElementById("cfDone");
+  const jump=()=>{ const c=document.getElementById("contact"); if(c){ c.scrollIntoView({behavior:"smooth"}); const n=form&&form.querySelector('[name=name]'); if(n) setTimeout(()=>n.focus(),450); } };
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a=>a.addEventListener("click",(e)=>{ e.preventDefault(); jump(); }));
+  if(!form) return;
+  const btn=document.getElementById("cfSubmit");
+  form.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+    const label=btn.textContent; btn.disabled=true; btn.textContent="Sending…";
+    const eo=form.querySelector(".cfErr"); if(eo) eo.remove();
+    try{
+      const res=await fetch("https://formsubmit.co/ajax/FARDEVBOT@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:new FormData(form)});
+      if(!res.ok) throw new Error("status "+res.status);
+      const nm=((form.querySelector('[name=name]')||{}).value||"").trim();
+      form.style.display="none";
+      if(done){ done.hidden=false; const sub=done.querySelector(".cfDoneSub"); if(sub&&nm) sub.textContent="Thanks, "+nm+" — I'll be in touch shortly at the email you provided."; done.scrollIntoView({behavior:"smooth",block:"center"}); }
+    }catch(err){
+      btn.disabled=false; btn.textContent=label;
+      const m=document.createElement("p"); m.className="cfErr"; m.style.cssText="color:var(--down);font-size:12px;margin:8px 0 0";
+      m.textContent="Couldn't send right now — please email FARDEVBOT@gmail.com directly."; form.appendChild(m);
+    }
+  });
+})();
+</script>
+</body>
+</html>

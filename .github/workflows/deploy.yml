@@ -1,0 +1,42 @@
+name: deploy-site
+
+# Publishes the static site in public/ to Cloudflare Pages (project: fardevbot-site).
+# Fires when the site files change — including the daily snapshot.json the trading box
+# pushes via the GitHub API. Uses the official wrangler CLI (Node lives here in CI, never
+# on the trading box). The only secret is CLOUDFLARE_API_TOKEN; the account ID is not secret.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Deploy public/ to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: e65482448728c05111e438fd130c7f4d
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::notice::CLOUDFLARE_API_TOKEN secret not set yet — skipping deploy (waiting for token)."
+            exit 0
+          fi
+          npx --yes wrangler@4 pages deploy public --project-name=fardevbot-site --branch=main --commit-dirty=true
